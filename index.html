@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BeopAlert</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="infoBox.css"/>
+        <script src="lib/jquery-2.1.4.min.js"></script>
+        <script src="infoBox.js"></script>
+    </head>
+    <body>
+        <div>
+        	<button id="test">run</button>
+        </div>
+        <script type="text/javascript">
+        	$(function(){
+        		$('#test').click(function(){
+        			infoBox.alert('success',{
+	        			title:'成功',
+	        			msg:'操作成功'
+        			})
+        		})
+        	})
+        </script>
+    </body>
+</html>
