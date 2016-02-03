@@ -23,7 +23,7 @@ var infoBox = infoBox || {};
                     $header.addClass('movable');
                 }
                 if (me.options.title) {
-                    $header.append('<div class="infoBox-title">' + me.options.title + '</div>');
+                    $header.append('<div class="ellipsis infoBox-title">' + me.options.title + '</div>');
                 }
 
                 if (me.options.hasClose) {
@@ -61,7 +61,7 @@ var infoBox = infoBox || {};
             return $box;
         },
         _processInput: function (options) {
-            if (options.buttons) {
+            if (options && options.buttons) {
                 for (var btnKey in options.buttons) {
                     if (options.callback && options.callback[btnKey]) {
                         options.buttons[btnKey].callback = options.callback[btnKey];
@@ -104,24 +104,26 @@ var infoBox = infoBox || {};
             $button.text(option.text);
             $button.click(function () {
                 me._destroy();
-                option.callback();
+                option.callback && option.callback();
             });
             $button.addClass(option.css);
             this.$el.find('.infoBox-footer').append($button);
         }
     };
 
-    function infoBoxAlert(type, options) {
-        if (arguments.length >= 2) {
-            if (infoBox.alert.options[type]) {
-                this.type = type;
-            } else {
-                this.type = infoBox.alert.base.type;
-            }
-        } else {
+    function infoBoxAlert(typeOrMsg, options) {
+        if (!options) {
             this.type = infoBox.alert.base.type;
+            options = {msg: typeOrMsg}
         }
 
+        if (!typeOrMsg) {
+            this.type = infoBox.alert.base.type;
+        } else if (infoBox.alert.options[typeOrMsg]) {
+            this.type = typeOrMsg;
+        } else {
+            options = $.extend(options, {msg: typeOrMsg});
+        }
 
         this.options = this._processInput(options);
 
@@ -153,15 +155,13 @@ var infoBox = infoBox || {};
             ok: {
                 text: 'ok',
                 class: 'alert-button',
-                callback: function () {
-
-                }
+                callback: ''
             }
         },
         modal: true,
         hasHeader: true,
         hasClose: true,
-        movable: true
+        movable: false
     };
 
     infoBox.alert.options = {

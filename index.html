@@ -15,6 +15,8 @@
     <button class='alert' data-type='success'>alert-success</button>
     <button class='alert' data-type='warning'>alert-warning</button>
     <button class='alert' data-type='danger'>alert-danger</button>
+
+    <button id='simpleUse'>simple use</button>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -35,6 +37,10 @@
                     }
                 }
             })
+        });
+
+        $('#simpleUse').click(function () {
+            infoBox.alert('simple use');
         })
     })
 </script>
