@@ -1,10 +1,10 @@
 
 .infoBox {
     width: 400px;
-    height: 200px;
+    height: 191px;
     overflow-y: auto;
     z-index: 1981;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
     border-radius: 2px;
     position: relative;
     margin: 5% auto;
@@ -18,12 +18,10 @@
 .infoBox-header {
     color: black;
     font-weight: bold;
-    background: #fafafa;
     border-bottom: #eee 1px solid;
     border-radius: 2px 2px 0 0;
     margin: -24px;
-    margin-bottom: 0;
-    padding: 16px 24px;
+    padding: 13px 24px;
     background-color: #fff;
 }
 
@@ -57,7 +55,7 @@
     padding: 4px;
     margin-left: -24px;
     margin-right: -24px;
-    min-height: 30px;
+    min-height: 40px;
 }
 
 .infoBox-body {
@@ -65,4 +63,35 @@
     height: 117px;
     padding: 5px;
     overflow-y: auto;
+}
+
+.infoBox-msg {
+    float: left;
+    margin-left: 20px;
+    margin-top: 12%;
+}
+
+.infoBox-icon {
+    float: left;
+    margin-top: 8%;
+}
+
+.alert-button {
+    float: right;
+    background-color: #44c767;
+    border-radius: 1px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px 31px;
+    border: 1px solid #2f6627;
+}
+
+.alert-button:hover {
+    background-color: #5cbf2a;
+}
+
+.alert-button:active {
+    position: relative;
+    top: 1px;
 }

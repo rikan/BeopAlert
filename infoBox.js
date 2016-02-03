@@ -5,7 +5,7 @@ var infoBox = infoBox || {};
         $el: null,
         options: {},
         _init: function () {
-            this.$el = this._createBox();
+            this._createBox();
             if (this.options.movable) {
                 this._makeMovable();
             }
@@ -14,6 +14,7 @@ var infoBox = infoBox || {};
         _createBox: function () {
             var me = this;
             var $box = $('<div class="infoBox"></div>');
+            this.$el = $box;
 
             if (me.options.hasHeader) {
                 var $header = $('<div class="infoBox-header"></div>');
@@ -37,18 +38,20 @@ var infoBox = infoBox || {};
 
             var $body = $('<div class="infoBox-body"></div>');
 
+            if (me.options.icon) {
+                $body.append('<div class="infoBox-icon"><img src="./image/' + me.options.icon + '"></div>');
+            }
+
             if (me.options.msg) {
                 $body.append('<div class="infoBox-msg">' + me.options.msg + '</div>');
             }
             $box.append($body);
-            if (me.options.hasFooter) {
+            if (me.options.buttons) {
                 var $footer = $('<div class="infoBox-footer"></div>');
-                if (me.options.buttons) {
-                    for (var i = 0, j = me.options.buttons.length; i < j; i++) {
-                        $footer.append(me._createBtn(me.options.buttons[i]));
-                    }
-                }
                 $box.append($footer);
+                for (var btnKey in me.options.buttons) {
+                    $footer.append(me._createBtn(me.options.buttons[btnKey]));
+                }
             }
 
             if (me.options.modal) {
@@ -58,6 +61,13 @@ var infoBox = infoBox || {};
             return $box;
         },
         _processInput: function (options) {
+            if (options.buttons) {
+                for (var btnKey in options.buttons) {
+                    if (options.callback && options.callback[btnKey]) {
+                        options.buttons[btnKey].callback = options.callback[btnKey];
+                    }
+                }
+            }
             return options;
         },
         _show: function () {
@@ -88,8 +98,16 @@ var infoBox = infoBox || {};
             })
         },
 
-        _createBtn: function () {
-
+        _createBtn: function (option) {
+            var me = this;
+            var $button = $('<button class="alert-button"></button>');
+            $button.text(option.text);
+            $button.click(function () {
+                me._destroy();
+                option.callback();
+            });
+            $button.addClass(option.css);
+            this.$el.find('.infoBox-footer').append($button);
         }
     };
 
@@ -107,7 +125,7 @@ var infoBox = infoBox || {};
         _processInput: function (options) {
             var mergedOptions = infoBoxBase._processInput.call(this, options);
 
-            options = $.extend({}, mergedOptions, infoBox.alert.base, infoBox.alert.options[this.type]);
+            options = $.extend({}, infoBox.alert.base, infoBox.alert.options[this.type], mergedOptions);
 
             return options;
         },
@@ -124,28 +142,30 @@ var infoBox = infoBox || {};
         buttons: {
             ok: {
                 text: 'ok',
-                class: ''
+                class: 'alert-button',
+                callback: function () {
+
+                }
             }
         },
         modal: true,
         hasHeader: true,
         hasClose: true,
-        hasFooter: true,
         movable: true
     };
 
     infoBox.alert.options = {
         success: {
-            icon: ''
+            icon: 'alert-success.png'
         },
         warning: {
-            icon: ''
+            icon: 'alert-warning.png'
         },
         danger: {
-            icon: ''
+            icon: 'alert-danger.png'
         },
         info: {
-            icon: ''
+            icon: 'alert-info.png'
         }
     }
 
