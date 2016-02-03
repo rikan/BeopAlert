@@ -112,7 +112,16 @@ var infoBox = infoBox || {};
     };
 
     function infoBoxAlert(type, options) {
-        this.type = type;
+        if (arguments.length >= 2) {
+            if (infoBox.alert.options[type]) {
+                this.type = type;
+            } else {
+                this.type = infoBox.alert.base.type;
+            }
+        } else {
+            this.type = infoBox.alert.base.type;
+        }
+
 
         this.options = this._processInput(options);
 
@@ -139,6 +148,7 @@ var infoBox = infoBox || {};
     };
 
     infoBox.alert.base = {
+        type: 'info',
         buttons: {
             ok: {
                 text: 'ok',
