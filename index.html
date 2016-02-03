@@ -11,14 +11,21 @@
     </head>
     <body>
         <div>
-        	<button id="test">run</button>
+            <button class='alert' data-type='info'>alert-info</button>
+        	<button class='alert' data-type='success'>alert-success</button>
+            <button class='alert' data-type='warning'>alert-warning</button>
+            <button class='alert' data-type='danger'>alert-danger</button>
         </div>
         <script type="text/javascript">
         	$(function(){
-        		$('#test').click(function(){
-        			infoBox.alert('success',{
+        		$('.alert').click(function(){
+                    var $this = $(this);
+        			infoBox.alert($this.data('type'),{
 	        			title:'成功',
-	        			msg:'操作成功'
+	        			msg:'操作成功',
+                        ok:function(){
+                            alert('callback');
+                        }
         			})
         		})
         	})
